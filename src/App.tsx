@@ -1,7 +1,7 @@
 import React from "react";
-import Answer from "./comp/answer";
-import Header from "./comp/header";
-import Question from "./comp/question";
+import Header from "./comp/Header";
+import Question from "./comp/Question";
+import { StylesObject } from "./types/types";
 
 const questions = [
   {
@@ -174,27 +174,28 @@ const questions = [
   },
 ];
 
+const getStyles = (): StylesObject => {
+  return {
+    questionsContainer: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
+    },
+  };
+};
+
 function App() {
+  const { questionsContainer } = getStyles();
+
   return (
     <div className="App">
       <Header></Header>
-      <div className="questions-container">
+      <div style={questionsContainer}>
         {questions.map((question, i) => {
-          const { _id, text, image, answers } = question;
-          return (
-            <div className="question-container">
-              <Question key={_id} question={{ text, image }} index={i} />
-              <div className="answers-container">
-                {answers.map((answer, i) => {
-                  const { _id, text } = answer;
-                  return <Answer key={_id} answer={text} index={i}/>;
-                })}
-              </div>
-              <div>
-                <button className="x-button">X</button>
-              </div>
-            </div>
-          );
+          const { _id } = question;
+          return <Question key={_id} question={question} index={i} />;
         })}
       </div>
     </div>
